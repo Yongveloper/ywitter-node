@@ -11,9 +11,16 @@ export default class TweetService {
   ];
 
   async getTweets(username) {
-    return username
-      ? this.tweets.filter((tweet) => tweet.username === username)
-      : this.tweets;
+    // return username
+    //   ? this.tweets.filter((tweet) => tweet.username === username)
+    //   : this.tweets;
+    if (username) {
+      return this.tweets.filter((tweet) => tweet.username === username);
+    } else {
+      const response = await fetch('http://localhost:8080/tweets');
+      const data = await response.json();
+      return data;
+    }
   }
 
   async postTweet(text) {
