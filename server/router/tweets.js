@@ -4,78 +4,68 @@ const router = express.Router();
 
 let tweets = [
   {
-    id: 1,
+    id: '1',
     text: '테스트입니다',
-    createdAt: '2021-05-09T04:20:57.000Z',
+    createdAt: Date.now().toString(),
     name: 'yong',
     username: 'yong',
-    url: '',
-  },
-  {
-    id: 2,
-    text: '두번째 게시물 입니다',
-    createdAt: '2021-05-19T04:20:57.000Z',
-    name: 'yong',
-    username: 'yong',
-    url: '',
-  },
-  {
-    id: 3,
-    text: '밥밥',
-    createdAt: '2021-05-20T04:20:57.000Z',
-    name: 'bob',
-    username: 'bob',
     url: '',
   },
 ];
 
+// GET /tweets
+// GET /tweets?username=:username
 router.get('/', (req, res) => {
   const { username } = req.query;
-  if (username) {
-    const userTweets = tweets.filter((tweet) => tweet.username === username);
-    res.status(200).json(userTweets);
-  } else {
-    res.status(200).json(tweets);
-  }
+  const data = username
+    ? tweets.filter((tweet) => tweet.username === username)
+    : tweets;
+  res.status(200).json(data);
 });
 
+// Get /tweets/:id
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  const specificTweets = tweets.find((tweet) => tweet.id === Number(id));
-  if (specificTweets) {
-    res.status(200).json(specificTweets);
+  const tweet = tweets.find((tweet) => tweet.id === id);
+  if (tweet) {
+    res.status(200).json(tweet);
   } else {
-    res.status(404).send();
+    res.status(404).json({ message: `Tweet id(${id}) not found` });
   }
 });
 
+// POST /tweets
 router.post('/', (req, res) => {
   const { text, username, name } = req.body;
-  const newTweet = {
-    id: Date.now(),
+  const tweet = {
+    id: Date.now().toString(),
     name,
     username,
     createdAt: new Date(),
     text,
-    url: '',
   };
-  tweets.push(newTweet);
-  res.status(201).json(newTweet);
+  tweets = [tweet, ...tweets];
+  res.status(201).json(tweet);
 });
 
+// PUT /tweets/:id
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const { text } = req.body;
-  const newTweet = tweets.find((tweet) => tweet.id === Number(id));
-  if (!newTweet) return res.status(404).send();
-  newTweet.text = text;
-  res.status(200).json(newTweet);
+  const tweet = tweets.find((tweet) => tweet.id === id);
+  if (tweet) {
+    tweet.text = text;
+    res.status(200).json(tweet);
+  } else {
+    res.status(404).json({ message: `Tweet id(${id}) not found` });
+  }
 });
 
+// DELETE /tweets/:id
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  tweets = tweets.filter((tweet) => tweet.id !== Number(id));
-  res.status(204).send();
+  tweets = tweets.filter((tweet) => tweet.id !== id);
+  res.sendStatus(204);
 });
 
 export default router;
