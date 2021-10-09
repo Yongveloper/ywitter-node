@@ -3,10 +3,12 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import 'express-async-errors';
+import dotenv from 'dotenv';
 import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
 
 const PORT = 8080;
+dotenv.config();
 const app = express();
 
 app.use(express.json());

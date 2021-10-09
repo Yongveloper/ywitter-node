@@ -4,9 +4,9 @@ import {} from 'express-async-errors';
 import * as userRepository from '../data/auth.js';
 
 // TODO: Make it secure
-const jwtSecretKey = '$eNmGvMpEx9v7lQ#%U@pMTQiS%Nw$x1f';
-const jwtExpiresInDays = 3;
-const bcryptSaltRounds = 12;
+const jwtSecretKey = process.env.JWT_SECRET;
+const jwtExpiresInDays = process.env.JWT_EXPIRES_SEC;
+const bcryptSaltRounds = process.env.BCRYPT_SALT_ROUNDS;
 
 function createJwtToken(id) {
   return jwt.sign({ id }, jwtSecretKey, { expiresIn: jwtExpiresInDays });
