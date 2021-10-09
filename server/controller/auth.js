@@ -5,7 +5,7 @@ import * as userRepository from '../data/auth.js';
 
 // TODO: Make it secure
 const jwtSecretKey = '$eNmGvMpEx9v7lQ#%U@pMTQiS%Nw$x1f';
-const jwtExpiresInDays = '2d';
+const jwtExpiresInDays = 3;
 const bcryptSaltRounds = 12;
 
 function createJwtToken(id) {
