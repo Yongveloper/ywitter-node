@@ -3,12 +3,11 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import 'express-async-errors';
-import dotenv from 'dotenv';
 import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
+import { config } from './config.js';
 
 const PORT = 8080;
-dotenv.config();
 const app = express();
 
 app.use(express.json());
@@ -28,4 +27,6 @@ app.use((error, req, res, next) => {
   console.error(error);
   res.sendStatus(500);
 });
-app.listen(PORT, () => console.log(`Server listening on port:${PORT}`));
+app.listen(config.host.port, () =>
+  console.log(`Server listening on port:${PORT}`)
+);
