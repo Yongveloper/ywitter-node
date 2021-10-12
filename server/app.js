@@ -6,8 +6,8 @@ import 'express-async-errors';
 import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
 import { config } from './config.js';
+import { initSocket } from './connection/socket.js';
 
-const PORT = 8080;
 const app = express();
 
 app.use(express.json());
@@ -27,6 +27,8 @@ app.use((error, req, res, next) => {
   console.error(error);
   res.sendStatus(500);
 });
-app.listen(config.host.port, () =>
-  console.log(`Server listening on port:${PORT}`)
+
+const server = app.listen(config.host.port, () =>
+  console.log(`Server listening on port:${config.host.port}`)
 );
+initSocket(server);
