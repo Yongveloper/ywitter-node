@@ -31,7 +31,7 @@ export async function updateTweet(req, res) {
   const { text } = req.body;
   const tweet = await tweetRepository.getById(id);
   if (!tweet) {
-    return res.sendStatus(404);
+    return res.sendStatus(404).json({ message: `Tweet not found: ${id}` });
   }
   if (tweet.userId !== req.userId) {
     return res.sendStatus(403);
