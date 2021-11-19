@@ -1,8 +1,8 @@
 import SQ from 'sequelize';
-import { db, sequelize } from '../db/database.js';
+import { sequelize } from '../db/database.js';
 const { DataTypes } = SQ;
 
-const User = sequelize.define(
+export const User = sequelize.define(
   'user',
   {
     id: {
@@ -16,6 +16,10 @@ const User = sequelize.define(
       allowNull: false,
     },
     password: {
+      type: DataTypes.STRING(128),
+      allowNull: false,
+    },
+    name: {
       type: DataTypes.STRING(128),
       allowNull: false,
     },
