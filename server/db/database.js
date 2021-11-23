@@ -1,5 +1,6 @@
 import Mongoose from 'mongoose';
 import { config } from '../config.js';
+import SQ from 'sequelize';
 
 export async function connectDB() {
   return Mongoose.connect(config.db.host);
@@ -12,12 +13,4 @@ export function useVirtualId(schema) {
   });
   schema.set('toJSON', { virtuals: true });
   schema.set('toObject', { virtuals: true });
-}
-
-// TODO(Yong): Delete blow
-
-let db = null;
-
-export function getTweets() {
-  return db.collection('tweets');
 }
