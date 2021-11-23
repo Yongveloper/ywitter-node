@@ -1,10 +1,16 @@
+import Mongoose from 'mongoose';
 import { config } from '../config.js';
 import SQ from 'sequelize';
 
-const { host, user, database, password } = config.db;
+export async function connectDB() {
+  return Mongoose.connect(config.db.host);
+}
 
-export const sequelize = new SQ.Sequelize(database, user, password, {
-  host,
-  dialect: 'mysql',
-  logging: false,
-});
+export function useVirtualId(schema) {
+  // _id -> id
+  schema.virtual('id').get(function () {
+    return this._id.toString();
+  });
+  schema.set('toJSON', { virtuals: true });
+  schema.set('toObject', { virtuals: true });
+}
