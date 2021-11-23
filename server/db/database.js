@@ -1,6 +1,5 @@
 import Mongoose from 'mongoose';
 import { config } from '../config.js';
-import SQ from 'sequelize';
 
 export async function connectDB() {
   return Mongoose.connect(config.db.host);
