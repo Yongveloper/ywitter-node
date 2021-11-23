@@ -3,7 +3,7 @@ import MongoDb from 'mongodb';
 const ObjectId = MongoDb.ObjectId;
 
 function mapOtinalUser(user) {
-  return user ? { ...user, id: user._id } : user;
+  return user ? { ...user, id: user._id.toString() } : user;
 }
 
 export async function findByUsername(username) {
