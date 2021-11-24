@@ -5,7 +5,6 @@ import * as userRepository from '../data/auth.js';
 import { config } from '../config.js';
 
 function createJwtToken(id) {
-  console.log(config.jwt.secretKey);
   return jwt.sign({ id }, config.jwt.secretKey, {
     expiresIn: config.jwt.expiresInSec,
   });
